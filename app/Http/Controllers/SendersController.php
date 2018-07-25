@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Sender;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SendersController extends Controller
 {
@@ -15,6 +16,7 @@ class SendersController extends Controller
     public function index()
     {
         //
+        echo "This is index";
     }
 
     /**
@@ -36,23 +38,21 @@ class SendersController extends Controller
     public function store(Request $request)
     {
         //
-        // $parcel =Sender::create([
-        //     'item'=>$request->input('item'),
-        //     'pickup_address'=>$request->input('pickup_address'),
-        //     'pickup_state'=>$request->input('pickup_state'),
-        //     'delivery_address'=>$request->input('delivery_address'),
-        //     'delivery_state'=>$request->input('delivery_state'),               
-        //     'status'=>'available',               
-        // ]);
+        $sender =Sender::create([
+            'name'=>$request->input('name'),
+            'email'=>$request->input('email'),
+            'sender_address'=>$request->input('sender_address'),
+            'password'=>$request->input('password'),//Not encrypting. Need to check. 
+            //Add approval later              
+        ]);
 
-        // if($parcel_sender){
-        //     return redirect()->route('parcels.show', ['parcel'=>$parcel->id])
-        //     ->with('success', 'Parcel added successfully');
-        // }
-        echo $request->input('name'). "<br>";
-        echo $request->input('email'). "<br>";
-        echo $request->input('sender_address'). "<br>";
-        echo $request->input('password'). "<br>";
+        if($sender){
+            return redirect()->route('senders.index');
+        }
+        // echo $request->input('name'). "<br>";
+        // echo $request->input('email'). "<br>";
+        // echo $request->input('sender_address'). "<br>";
+        // echo $request->input('password'). "<br>";
     }
 
     /**
@@ -103,6 +103,36 @@ class SendersController extends Controller
     public function register()
     {
        return view('senders.register');
+       //Redirect to login after registration
         
+    }
+    public function login()
+    {
+       return view('senders.login');
+       //Remove this route later
+      // echo "This is login";
+        
+    }
+
+    public function log(Request $request)
+    {
+      // return view('senders.login');
+       //Remove this route later
+       $email = $request->input('email');
+       $password = $request->input('password');
+
+      $select = DB::select('select * from senders where email=? and password=?', [$email, $password]);//Traditional select query
+       //print_r ($select);
+
+       if(count($select)){//Counting data
+            //These codes are just for debugging
+            // echo "<h2> You are logged in. <h2/>";
+            // foreach ($select as $senders){
+            // echo $senders->name;   
+            //}
+            return view('senders.show', ['senders'=> $select]);    
+       }
+       else
+       return back();
     }
 }
