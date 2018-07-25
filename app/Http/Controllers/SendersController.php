@@ -41,7 +41,8 @@ class SendersController extends Controller
             'name'=>$request->input('name'),
             'email'=>$request->input('email'),
             'sender_address'=>$request->input('sender_address'),
-            'password'=>$request->input('password'),//Add approval later              
+            'password'=>$request->input('password'),//Not encrypting. Need to check. 
+            //Add approval later              
         ]);
 
         if($sender){
@@ -101,6 +102,24 @@ class SendersController extends Controller
     public function register()
     {
        return view('senders.register');
+       //Redirect to login after registration
+        
+    }
+    public function login()
+    {
+       return view('senders.login');
+       //Remove this route later
+      // echo "This is login";
+        
+    }
+
+    public function log(Request $request)
+    {
+      // return view('senders.login');
+       //Remove this route later
+       echo "<h2>This is log </h2><br>";
+       echo $request->input('email'). "<br>";
+       echo $request->input('password'). "<br>";
         
     }
 }
