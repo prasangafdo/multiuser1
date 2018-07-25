@@ -36,6 +36,23 @@ class SendersController extends Controller
     public function store(Request $request)
     {
         //
+        // $parcel =Sender::create([
+        //     'item'=>$request->input('item'),
+        //     'pickup_address'=>$request->input('pickup_address'),
+        //     'pickup_state'=>$request->input('pickup_state'),
+        //     'delivery_address'=>$request->input('delivery_address'),
+        //     'delivery_state'=>$request->input('delivery_state'),               
+        //     'status'=>'available',               
+        // ]);
+
+        // if($parcel_sender){
+        //     return redirect()->route('parcels.show', ['parcel'=>$parcel->id])
+        //     ->with('success', 'Parcel added successfully');
+        // }
+        echo $request->input('name'). "<br>";
+        echo $request->input('email'). "<br>";
+        echo $request->input('sender_address'). "<br>";
+        echo $request->input('password'). "<br>";
     }
 
     /**

@@ -5,7 +5,8 @@
 
 
                 <div class="card-body">
-                    <form method="POST" action="{{''}}">
+                    <form method="POST" action="{{route ('senders.store')}}">
+                    
                     {{--  Add action  --}}
 
                         <div class="form-group row">
@@ -31,6 +32,20 @@
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="sender_address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="sender_address" type="text" class="form-control{{ $errors->has('sender_address') ? ' is-invalid' : '' }}" name="sender_address" value="{{ old('sender_address') }}" required autofocus>
+
+                                @if ($errors->has('sender_address'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('sender_address') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -65,6 +80,7 @@
                                 </button>
                             </div>
                         </div>
+                        		        	 		{{csrf_field() }}
                     </form>
                 </div>
             </div>
