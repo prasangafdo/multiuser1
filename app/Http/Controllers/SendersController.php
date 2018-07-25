@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Sender;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SendersController extends Controller
 {
@@ -117,9 +118,21 @@ class SendersController extends Controller
     {
       // return view('senders.login');
        //Remove this route later
-       echo "<h2>This is log </h2><br>";
-       echo $request->input('email'). "<br>";
-       echo $request->input('password'). "<br>";
-        
+       $email = $request->input('email');
+       $password = $request->input('password');
+
+      $select = DB::select('select * from senders where email=? and password=?', [$email, $password]);//Traditional select query
+       //print_r ($select);
+
+       if(count($select)){//Counting data
+            //These codes are just for debugging
+            // echo "<h2> You are logged in. <h2/>";
+            // foreach ($select as $senders){
+            // echo $senders->name;   
+            //}
+            return view('senders.show', ['senders'=> $select]);    
+       }
+       else
+       return back();
     }
 }
