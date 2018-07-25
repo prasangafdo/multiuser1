@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Auth::routes();//Removed auth routes for now
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('senders', 'Senderscontroller');
+Route::get('/register', 'Senderscontroller@register');//Pass location variables
+
+
+
+
