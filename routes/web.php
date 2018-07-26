@@ -20,9 +20,22 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('senders', 'Senderscontroller');
 Route::get('/register', 'Senderscontroller@register');//Pass location variables
- Route::get('/login', 'Senderscontroller@login');//Pass location variables
+Route::get('/login', 'Senderscontroller@login');//Pass location variables
 Route::post('/log', 'Senderscontroller@log')->name('senders.log');//Pass location variables
 
+//Route::get('/senders/register', 'Senderscontroller@register');
 
+// Route::prefix('senders')->group(function () {
+//     Route::get('register', function () {
+//         // Matches The "/admin/users" URL
+//       //  Route::get('/senders/register', 'Senderscontroller@register');   
+//       echo "Register";    
+//     });
+// });
 
-
+Route::prefix('sender')->group(function () {
+    Route::get('register', function () {
+        // Matches The "/admin/users" URL
+        echo "admin";
+    });
+});
