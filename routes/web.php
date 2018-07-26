@@ -19,23 +19,21 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('senders', 'Senderscontroller');
-Route::get('/register', 'Senderscontroller@register');//Pass location variables
-Route::get('/login', 'Senderscontroller@login');//Pass location variables
-Route::post('/log', 'Senderscontroller@log')->name('senders.log');//Pass location variables
+Route::get('/sender/register', 'Senderscontroller@register');//Pass location variables
+Route::get('/sender/login', 'Senderscontroller@login')->name('senders.login');//Pass location variables
+Route::post('/sender/home', 'Senderscontroller@home')->name('senders.home');//Pass location variables
+
+Route::resource('couriers', 'CouriersController');
+Route::get('/courier/register', 'CouriersController@register');//Pass location variables
+Route::get('/courier/login', 'CouriersController@login')->name('couriers.login');//Pass location variables
+Route::post('/courier/home', 'CouriersController@home')->name('couriers.home');//Pass location variables
+
 
 //Route::get('/senders/register', 'Senderscontroller@register');
 
-// Route::prefix('senders')->group(function () {
+// Route::prefix('sender')->group(function () {
 //     Route::get('register', function () {
 //         // Matches The "/admin/users" URL
-//       //  Route::get('/senders/register', 'Senderscontroller@register');   
-//       echo "Register";    
+//         echo "admin";
 //     });
 // });
-
-Route::prefix('sender')->group(function () {
-    Route::get('register', function () {
-        // Matches The "/admin/users" URL
-        echo "admin";
-    });
-});

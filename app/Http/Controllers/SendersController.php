@@ -47,7 +47,7 @@ class SendersController extends Controller
         ]);
 
         if($sender){
-            return redirect()->route('senders.index');
+            return redirect()->route('senders.login');
         }
         // echo $request->input('name'). "<br>";
         // echo $request->input('email'). "<br>";
@@ -114,7 +114,7 @@ class SendersController extends Controller
         
     }
 
-    public function log(Request $request)
+    public function home(Request $request)
     {
       // return view('senders.login');
        //Remove this route later
