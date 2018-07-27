@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Courier;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class CouriersController extends Controller
@@ -36,7 +37,17 @@ class CouriersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sender =Courier::create([
+            'name'=>$request->input('name'),
+            'email'=>$request->input('email'),
+            'courier_address'=>$request->input('courier_address'),
+            'password'=>$request->input('password'),//Not encrypting. Need to check. 
+            //Add approval later              
+        ]);
+
+        if($sender){
+            return redirect()->route('couriers.login');
+        }
     }
 
     /**
@@ -82,5 +93,41 @@ class CouriersController extends Controller
     public function destroy(Courier $courier)
     {
         //
+    }
+
+    public function register()
+    {
+       return view('couriers.register');
+       //Redirect to login after registration
+        
+    }
+    public function login()
+    {
+       return view('couriers.login');
+       //Remove this route later
+      // echo "This is login";
+        
+    }
+
+    public function home(Request $request)
+    {
+      // return view('senders.login');
+       //Remove this route later
+       $email = $request->input('email');
+       $password = $request->input('password');
+
+      $select = DB::select('select * from couriers where email=? and password=?', [$email, $password]);//Traditional select query
+       //print_r ($select);
+
+       if(count($select)){//Counting data
+            //These codes are just for debugging
+            // echo "<h2> You are logged in. <h2/>";
+            // foreach ($select as $senders){
+            // echo $senders->name;   
+            //}
+            return view('couriers.show', ['couriers'=> $select]);    
+       }
+       else
+       return back();
     }
 }
