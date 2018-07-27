@@ -5,7 +5,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action=" {{route('senders.home')}}" aria-label="{{ __('Login') }}">
+                    <form method="POST" action=" {{route('couriers.home')}}" aria-label="{{ __('Login') }}">
 
                         @csrf
                         <div class="form-group row">

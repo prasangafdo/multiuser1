@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Sender;
+use App\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class SendersController extends Controller
+class AdminsController extends Controller//Admin has no registration form. Login only
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class SendersController extends Controller
      */
     public function index()
     {
-        //
-        echo "This is index";
+        //Since admin doesn't want to see the content of the website in frontend, admins index is login.
+        return view('admins.login');
     }
 
     /**
@@ -38,30 +38,15 @@ class SendersController extends Controller
     public function store(Request $request)
     {
         //
-        $sender =Sender::create([
-            'name'=>$request->input('name'),
-            'email'=>$request->input('email'),
-            'sender_address'=>$request->input('sender_address'),
-            'password'=>$request->input('password'),//Not encrypting. Need to check. 
-            //Add approval later              
-        ]);
-
-        if($sender){
-            return redirect()->route('senders.login');
-        }
-        // echo $request->input('name'). "<br>";
-        // echo $request->input('email'). "<br>";
-        // echo $request->input('sender_address'). "<br>";
-        // echo $request->input('password'). "<br>";
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Sender  $sender
+     * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function show(Sender $sender)
+    public function show(Admin $admin)
     {
         //
     }
@@ -69,10 +54,10 @@ class SendersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Sender  $sender
+     * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sender $sender)
+    public function edit(Admin $admin)
     {
         //
     }
@@ -81,10 +66,10 @@ class SendersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Sender  $sender
+     * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sender $sender)
+    public function update(Request $request, Admin $admin)
     {
         //
     }
@@ -92,26 +77,12 @@ class SendersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Sender  $sender
+     * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sender $sender)
+    public function destroy(Admin $admin)
     {
         //
-    }
-
-    public function register()
-    {
-       return view('senders.register');
-       //Redirect to login after registration
-        
-    }
-    public function login()
-    {
-       return view('senders.login');
-       //Remove this route later
-      // echo "This is login";
-        
     }
 
     public function home(Request $request)
@@ -121,16 +92,15 @@ class SendersController extends Controller
        $email = $request->input('email');
        $password = $request->input('password');
 
-      $select = DB::select('select * from senders where email=? and password=?', [$email, $password]);//Traditional select query
+      $select = DB::select('select * from admins where email=? and password=?', [$email, $password]);//Traditional select query
        //print_r ($select);
 
        if(count($select)){//Counting data
             //These codes are just for debugging
-            // echo "<h2> You are logged in. <h2/>";
             // foreach ($select as $senders){
             // echo $senders->name;   
             //}
-            return view('senders.show', ['senders'=> $select]);    
+            return view('admins.show', ['admins'=> $select]);    
        }
        else
        return back();

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Sender;
+use App\Courier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class SendersController extends Controller
+class CouriersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class SendersController extends Controller
      */
     public function index()
     {
-        //
-        echo "This is index";
+        //return view();
+        echo "This is courier index";
     }
 
     /**
@@ -37,31 +37,26 @@ class SendersController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $sender =Sender::create([
+        $sender =Courier::create([
             'name'=>$request->input('name'),
             'email'=>$request->input('email'),
-            'sender_address'=>$request->input('sender_address'),
+            'courier_address'=>$request->input('courier_address'),
             'password'=>$request->input('password'),//Not encrypting. Need to check. 
             //Add approval later              
         ]);
 
         if($sender){
-            return redirect()->route('senders.login');
+            return redirect()->route('couriers.login');
         }
-        // echo $request->input('name'). "<br>";
-        // echo $request->input('email'). "<br>";
-        // echo $request->input('sender_address'). "<br>";
-        // echo $request->input('password'). "<br>";
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Sender  $sender
+     * @param  \App\Courier  $courier
      * @return \Illuminate\Http\Response
      */
-    public function show(Sender $sender)
+    public function show(Courier $courier)
     {
         //
     }
@@ -69,10 +64,10 @@ class SendersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Sender  $sender
+     * @param  \App\Courier  $courier
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sender $sender)
+    public function edit(Courier $courier)
     {
         //
     }
@@ -81,10 +76,10 @@ class SendersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Sender  $sender
+     * @param  \App\Courier  $courier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sender $sender)
+    public function update(Request $request, Courier $courier)
     {
         //
     }
@@ -92,23 +87,23 @@ class SendersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Sender  $sender
+     * @param  \App\Courier  $courier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sender $sender)
+    public function destroy(Courier $courier)
     {
         //
     }
 
     public function register()
     {
-       return view('senders.register');
+       return view('couriers.register');//Move to create
        //Redirect to login after registration
         
     }
     public function login()
     {
-       return view('senders.login');
+       return view('couriers.login');
        //Remove this route later
       // echo "This is login";
         
@@ -121,7 +116,7 @@ class SendersController extends Controller
        $email = $request->input('email');
        $password = $request->input('password');
 
-      $select = DB::select('select * from senders where email=? and password=?', [$email, $password]);//Traditional select query
+      $select = DB::select('select * from couriers where email=? and password=?', [$email, $password]);//Traditional select query
        //print_r ($select);
 
        if(count($select)){//Counting data
@@ -130,7 +125,7 @@ class SendersController extends Controller
             // foreach ($select as $senders){
             // echo $senders->name;   
             //}
-            return view('senders.show', ['senders'=> $select]);    
+            return view('couriers.show', ['couriers'=> $select]);    
        }
        else
        return back();
