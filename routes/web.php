@@ -19,14 +19,17 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('senders', 'Senderscontroller');
+Route::resource('couriers', 'CouriersController');
+Route::resource('admins', 'AdminsController');
+
 Route::get('/sender/register', 'Senderscontroller@register');//Pass location variables
 Route::get('/sender/login', 'Senderscontroller@login')->name('senders.login');//Pass location variables
 Route::post('/sender/home', 'Senderscontroller@home')->name('senders.home');//Pass location variables
 
 Route::resource('couriers', 'CouriersController');
 Route::get('/courier/register', 'CouriersController@register');//Pass location variables
-Route::get('/courier/login', 'CouriersController@login')->name('couriers.login');//Pass location variables
-Route::post('/courier/home', 'CouriersController@home')->name('couriers.home');//Pass location variables
+Route::get('/courier/login', 'CouriersController@login')->name('couriers.login');
+Route::post('/courier/home', 'CouriersController@home')->name('couriers.home');
 
 
 //Route::get('/senders/register', 'Senderscontroller@register');
@@ -37,3 +40,8 @@ Route::post('/courier/home', 'CouriersController@home')->name('couriers.home');/
 //         echo "admin";
 //     });
 // });
+
+Route::prefix('admin')->group(function () {
+    Route::get('/', 'AdminsController@index');//Admin has no registration form
+    Route::post('/home', 'AdminsController@home')->name('admins.home');//Pass location variables
+});

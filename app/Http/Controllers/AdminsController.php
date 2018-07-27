@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Courier;
+use App\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class CouriersController extends Controller
+class AdminsController extends Controller//Admin has no registration form. Login only
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class CouriersController extends Controller
      */
     public function index()
     {
-        //return view();
-        echo "This is courier index";
+        //Since admin doesn't want to see the content of the website in frontend, admins index is login.
+        return view('admins.login');
     }
 
     /**
@@ -37,26 +37,16 @@ class CouriersController extends Controller
      */
     public function store(Request $request)
     {
-        $sender =Courier::create([
-            'name'=>$request->input('name'),
-            'email'=>$request->input('email'),
-            'courier_address'=>$request->input('courier_address'),
-            'password'=>$request->input('password'),//Not encrypting. Need to check. 
-            //Add approval later              
-        ]);
-
-        if($sender){
-            return redirect()->route('couriers.login');
-        }
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Courier  $courier
+     * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function show(Courier $courier)
+    public function show(Admin $admin)
     {
         //
     }
@@ -64,10 +54,10 @@ class CouriersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Courier  $courier
+     * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function edit(Courier $courier)
+    public function edit(Admin $admin)
     {
         //
     }
@@ -76,10 +66,10 @@ class CouriersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Courier  $courier
+     * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Courier $courier)
+    public function update(Request $request, Admin $admin)
     {
         //
     }
@@ -87,26 +77,12 @@ class CouriersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Courier  $courier
+     * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Courier $courier)
+    public function destroy(Admin $admin)
     {
         //
-    }
-
-    public function register()
-    {
-       return view('couriers.register');//Move to create
-       //Redirect to login after registration
-        
-    }
-    public function login()
-    {
-       return view('couriers.login');
-       //Remove this route later
-      // echo "This is login";
-        
     }
 
     public function home(Request $request)
@@ -116,16 +92,15 @@ class CouriersController extends Controller
        $email = $request->input('email');
        $password = $request->input('password');
 
-      $select = DB::select('select * from couriers where email=? and password=?', [$email, $password]);//Traditional select query
+      $select = DB::select('select * from admins where email=? and password=?', [$email, $password]);//Traditional select query
        //print_r ($select);
 
        if(count($select)){//Counting data
             //These codes are just for debugging
-            // echo "<h2> You are logged in. <h2/>";
             // foreach ($select as $senders){
             // echo $senders->name;   
             //}
-            return view('couriers.show', ['couriers'=> $select]);    
+            return view('admins.show', ['admins'=> $select]);    
        }
        else
        return back();
